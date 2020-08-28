@@ -1,0 +1,15 @@
+{
+  "private": "true",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "frontend1": "yarn workspace frontend1 start",
+    "frontend2": "yarn workspace frontend2 start",
+    "uikit": "yarn workspace uikit start",
+    "start": "concurrently \"yarn uikit\" \"yarn frontend1\" \"yarn frontend2\""
+  },
+  "dependencies": {
+    "concurrently": "^5.3.0"
+  }
+}

@@ -1,0 +1,19 @@
+FROM node:12.2.0-alpine as build-stage
+
+WORKDIR /app/build
+
+COPY ./package.json .
+COPY ./nginx ./nginx
+
+COPY ./packages/frontend1 ./packages/frontend1
+COPY ./packages/uikit ./packages/uikit
+
+RUN yarn install
+RUN yarn workspace uikit transpile
+
+WORKDIR /app/build/packages/frontend1
+RUN yarn build
+
+FROM emazzotta/docker-nginx-lua
+COPY --from=build-stage /app/build/packages/frontend1/build /usr/share/nginx/html
+COPY --from=build-stage /app/build/nginx/nginx.conf /etc/nginx/conf.d

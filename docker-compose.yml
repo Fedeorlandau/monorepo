@@ -1,0 +1,14 @@
+version: '3'
+services:
+    frontend1:
+      build:
+        context: .
+        dockerfile: ./packages/frontend1/Dockerfile.prod
+      volumes:
+        - '.:/app'
+        - '/app/node_modules'
+      ports:
+        - '80:80'
+      restart: on-failure
+      container_name: frontend1
+      
